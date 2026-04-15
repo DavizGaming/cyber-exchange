@@ -322,7 +322,7 @@ let isBoosted = false;
         function generateRefLink() {
             // В реальности здесь должен быть ID пользователя из Telegram
             const userId = Math.floor(Math.random() * 900000) + 100000; 
-            const botLink = "https://t.me/твой_бот/game?startapp=" + userId;
+            const botLink = "https://t.me/CyberBank/game?startapp=" + userId;
             document.getElementById('refLink').innerText = botLink;
             return botLink;
         }
