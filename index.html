@@ -142,9 +142,24 @@
         </div>
     </div>
 
-    <div id="friends-tab" class="tab-content">
-        <h2>РЕФЕРАЛЫ</h2>
-        <p>Скоро здесь будет твоя ссылка</p>
+   <div id="friends-tab" class="tab-content">
+        <h2 style="color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue);">RECRUITS</h2>
+        <p style="text-align: center; opacity: 0.8;">Приглашай хакеров и получай <br><span style="color: var(--neon-pink);">+5000 $</span> за каждого!</p>
+        
+        <div style="background: var(--card-bg); padding: 20px; border: 1px solid var(--neon-blue); border-radius: 15px; width: 85%; text-align: center; margin-top: 20px;">
+            <p style="font-size: 12px; color: var(--neon-blue);">ТВОЯ ССЫЛКА:</p>
+            <code id="refLink" style="word-break: break-all; font-size: 10px; color: var(--neon-pink);">t.me/твой_бот?start=user123</code>
+            
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn" onclick="copyLink()" style="background: #333; font-size: 12px;">КОПИРОВАТЬ</button>
+                <button class="btn buy" onclick="shareGame()" style="font-size: 12px;">ПРИГЛАСИТЬ</button>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; width: 100%;">
+            <p style="font-size: 14px; border-bottom: 1px solid #333; padding-bottom: 5px;">Список друзей (0)</p>
+            <p style="opacity: 0.3; font-size: 12px; text-align: center; margin-top: 10px;">Пока пусто... Время вербовать!</p>
+        </div>
     </div>
 
     <div class="nav-bar">
@@ -302,6 +317,32 @@ let isBoosted = false;
             // Adsgram.show().then(() => { /* код выше */ })
             alert("Реклама просмотрена! Буст X2 активирован на 30 секунд.");
         }
+
+// Логика реферальной программы
+        function generateRefLink() {
+            // В реальности здесь должен быть ID пользователя из Telegram
+            const userId = Math.floor(Math.random() * 900000) + 100000; 
+            const botLink = "https://t.me/твой_бот/game?startapp=" + userId;
+            document.getElementById('refLink').innerText = botLink;
+            return botLink;
+        }
+
+        function copyLink() {
+            const link = document.getElementById('refLink').innerText;
+            navigator.clipboard.writeText(link);
+            alert("Ссылка скопирована! Отправь её другу.");
+        }
+
+        function shareGame() {
+            const link = document.getElementById('refLink').innerText;
+            const text = "Эй! Заходи в Cyber Punk Exchange, фарми кредиты и стань крипто-лордом! 🚀";
+            const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`;
+            window.open(shareUrl, '_blank');
+        }
+
+        // Вызываем генерацию ссылки при загрузке
+        generateRefLink();
+
         // Старт
         updateUI();
     </script>
