@@ -343,6 +343,23 @@ let isBoosted = false;
         // Вызываем генерацию ссылки при загрузке
         generateRefLink();
 
+        // 1. Автоматический приветственный бонус для новых игроков
+        if (!localStorage.getItem('first_time_bonus')) {
+            balance += 1000;
+            localStorage.setItem('first_time_bonus', 'true');
+            alert("СИСТЕМА ВЗЛОМАНА: Тебе начислено 1000$ стартового капитала!");
+        }
+
+        // 2. Исправленная реферальная ссылка (под твоего бота)
+        function generateRefLink() {
+            // Замени 'CyberBank_bot' на реальный юзернейм твоего бота без @
+            const botUsername = "ТВОЙ_ЮЗЕРНЕЙМ_БОТА"; 
+            const userId = Math.floor(Math.random() * 900000) + 100000; 
+            const botLink = "https://t.me/" + botUsername + "/game?startapp=" + userId;
+            document.getElementById('refLink').innerText = botLink;
+            return botLink;
+        }
+        
         // Старт
         updateUI();
     </script>
