@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <script src="https://sad.adsgram.ai/js/adsgram-ad-sdk.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cyber Punk Exchange</title>
@@ -359,7 +360,53 @@ let isBoosted = false;
             document.getElementById('refLink').innerText = botLink;
             return botLink;
         }
-        
+        function watchAd() {
+            // Инициализация рекламы (Замени 'YOUR_BLOCK_ID' на ID из личного кабинета Adsgram)
+            const AdController = window.Adsgram.init({ blockId: "26972" });
+
+            AdController.show().then((result) => {
+                // Пользователь досмотрел рекламу до конца
+                activateBoost();
+                alert("Реклама просмотрена! Буст X2 активирован.");
+            }).catch((result) => {
+                // Пользователь закрыл рекламу раньше времени или произошла ошибка
+                alert("Чтобы получить буст, нужно досмотреть рекламу до конца.");
+                console.log("Ad error:", result);
+            });
+        }
+
+        // Вынес логику буста в отдельную функцию
+        function activateBoost() {
+            const btn = document.getElementById('adBtn');
+            const timerText = document.getElementById('timerText');
+            const secondsEl = document.getElementById('seconds');
+            const clickText = document.getElementById('clickText');
+
+            btn.style.display = 'none';
+            timerText.style.display = 'block';
+            
+            isBoosted = true;
+            clickText.innerText = "X2 MODE";
+            clickText.style.color = 'var(--neon-pink)';
+            document.getElementById('clicker').style.borderColor = 'var(--neon-pink)';
+
+            let timeLeft = 30;
+            if (boostTimer) clearInterval(boostTimer);
+            
+            boostTimer = setInterval(() => {
+                timeLeft--;
+                secondsEl.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(boostTimer);
+                    isBoosted = false;
+                    btn.style.display = 'block';
+                    timerText.style.display = 'none';
+                    clickText.innerText = "HACK";
+                    clickText.style.color = 'var(--neon-blue)';
+                    document.getElementById('clicker').style.borderColor = 'var(--neon-blue)';
+                }
+            }, 1000);
+        }
         // Старт
         updateUI();
     </script>
